@@ -1,9 +1,9 @@
 // Add imports above this line
 import { galleryItems } from './gallery-items';
-// Описан в документации
 import SimpleLightbox from "simplelightbox";
-// Дополнительный импорт стилей
 import "simplelightbox/dist/simple-lightbox.min.css";
+import '../css/common.css';
+import '../css/01-gallery.css';
 
 // Change code below this line
 const galleryContainer = document.querySelector(".gallery");
@@ -27,6 +27,12 @@ function createImagesCardMarkup(galleryItems) {
         `;
     }).join('');
 }
+let lightbox = new SimpleLightbox('.gallery a', {
+  scrollZoom: false,
+  captionDelay: 250,
+  captionsData: 'alt',
+  doubleTapZoom: 1,
+});
 
 const onGalleryContainerClick = (evt) => { 
     evt.preventDefault();
