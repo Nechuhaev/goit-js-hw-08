@@ -1,6 +1,9 @@
+import throttle from 'lodash.throttle';
 import '../css/common.css';
 import '../css/03-feedback.css';
-import throttle from 'lodash.throttle';
+
+
+const STORAGE_KEY = 'feedback-form-state';
 
 const refs = {
   form: document.querySelector('.feedback-form'),
@@ -8,18 +11,31 @@ const refs = {
 };
 
 refs.form.addEventListener('submit', onFormSubmit);
-refs.textarea.addEventListener('input', onTextareaInput);
+refs.textarea.addEventListener('input', throttle(onTextareaInput, 500));
 
+pupolateMassageOutput();
 
-function onFormSubmit(evt) { }
+function onFormSubmit(evt) { 
+  evt.preventDefault();
+
+  evt.currentTarget.reset();
+
+  localStorage.removeItem(STORAGE_KEY);
+}
 
 
 function onTextareaInput(evt) {
-  const value = evt.currentTarget.value;
+  const message = evt.target.value;
 
-  console.log(value);
-
-  localStorage.setItem('feedback-form-state', massage)
+  localStorage.setItem(STORAGE_KEY, message)
 }
 
-function pupolateMassageOutput() { }
+function pupolateMassageOutput() { 
+  const savedMessage = localStorage.getItem(STORAGE_KEY);
+
+  if (savedMessage) { 
+    console.log(savedMessage);
+    refs.textarea.value = savedMessage;
+  }
+
+}
