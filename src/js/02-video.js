@@ -24,9 +24,9 @@ function resumePlayback() {
       .catch(function (error) {
         switch (error.name) {
           case 'Error':
-            break;
+          break;
           default:
-            break;
+          break;
         }
       });
   }

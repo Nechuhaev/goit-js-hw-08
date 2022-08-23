@@ -1,41 +1,42 @@
 import throttle from 'lodash.throttle';
-import '../css/common.css';
-import '../css/03-feedback.css';
+import { getValue } from './localstorage-values';
 
 
 const STORAGE_KEY = 'feedback-form-state';
 
+const formData = {};
+
 const refs = {
   form: document.querySelector('.feedback-form'),
-  textarea: document.querySelector('.feedback-form textarea'),
+  textarea: document.querySelector('textarea'),
+  input: document.querySelector('input'),
 };
 
 refs.form.addEventListener('submit', onFormSubmit);
-refs.textarea.addEventListener('input', throttle(onTextareaInput, 500));
+refs.form.addEventListener('input', throttle(onTextareaInput, 500));
 
 pupolateMassageOutput();
 
 function onFormSubmit(evt) { 
   evt.preventDefault();
-
   evt.currentTarget.reset();
-
   localStorage.removeItem(STORAGE_KEY);
 }
 
 
 function onTextareaInput(evt) {
-  const message = evt.target.value;
-
+  formData[evt.target.name] = evt.target.value;
+  const message = JSON.stringify(formData);
   localStorage.setItem(STORAGE_KEY, message)
 }
 
 function pupolateMassageOutput() { 
-  const savedMessage = localStorage.getItem(STORAGE_KEY);
-
+  const savedMessage = getValue(STORAGE_KEY, "");
+console.log(savedMessage);
+ 
   if (savedMessage) { 
-    console.log(savedMessage);
-    refs.textarea.value = savedMessage;
+    refs.input.value = savedMessage.email;
+    refs.textarea.value = savedMessage.message;
   }
 
 }
