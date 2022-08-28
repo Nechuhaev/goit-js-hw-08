@@ -1,7 +1,6 @@
 import throttle from 'lodash.throttle';
 import { getValue } from './localstorage-values';
 
-
 const STORAGE_KEY = 'feedback-form-state';
 
 const formData = {};
@@ -23,7 +22,6 @@ function onFormSubmit(evt) {
   localStorage.removeItem(STORAGE_KEY);
 }
 
-
 function onTextareaInput(evt) {
   formData[evt.target.name] = evt.target.value;
   const message = JSON.stringify(formData);
@@ -32,11 +30,10 @@ function onTextareaInput(evt) {
 
 function pupolateMassageOutput() { 
   const savedMessage = getValue(STORAGE_KEY, "");
-console.log(savedMessage);
+  console.log(savedMessage);
  
   if (savedMessage) { 
     refs.input.value = savedMessage.email;
     refs.textarea.value = savedMessage.message;
   }
-
 }

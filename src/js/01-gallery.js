@@ -12,7 +12,6 @@ galleryContainer.insertAdjacentHTML("beforeend", imageMarkup);
 function createImagesCardMarkup(galleryItems) {
     return galleryItems.map(({original, preview, description}) => {
         return `
-        
             <a href="${original}" class="gallery__item">
                 <img 
                 class="gallery__image"
